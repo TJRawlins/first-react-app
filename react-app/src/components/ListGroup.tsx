@@ -1,7 +1,12 @@
 import { useState } from "react";
 
-function ListGroup() {
-  let items = ["New York", "Houston", "Phoenix", "Los Angeles"];
+interface Props {
+    items: string[];
+    heading: string;
+    onSelectItem: (item: string) => void;
+} 
+
+function ListGroup({items, heading, onSelectItem}: Props) {
 
   // Hook
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -10,7 +15,7 @@ function ListGroup() {
   // Map each list item to an element
   return (
     <>
-      <h1>List</h1>
+      <h1>{heading}</h1>
       {items.length === 0 && <p>No Items Found</p>}
       <ul className="list-group">
         {items.map((item, i) => (
@@ -22,7 +27,8 @@ function ListGroup() {
             }
             key={item}
             onClick={() => {
-              setSelectedIndex(i);
+                setSelectedIndex(i);
+                onSelectItem(item);
             }}
           >
             {item}
